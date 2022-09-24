@@ -20,11 +20,28 @@ func main() {
 
 	// Routes
 	e.POST("/shorturl", shorten)
+	e.GET("/:surl", getOriginalURL)
 
 	fmt.Println(time.Now().String())
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+var urls cache.URLCacher = cache.Init()
+
+func getOriginalURL(c echo.Context) error {
+
+	surl := c.Param("surl")
+	ourl, err := urls.GetActualURL(surl)
+	if err != nil {
+		fmt.Println(err)
+		return c.String(http.StatusNotFound, err.Error())
+	}
+
+	c.Response().Header().Set("Location", ourl)
+
+	return c.String(http.StatusMovedPermanently, "")
 }
 
 // Handler
@@ -37,7 +54,6 @@ func shorten(c echo.Context) error {
 
 	c.Bind(&in)
 
-	urls := cache.Init()
 	surl, err := urls.CreateShortURL(in.Url)
 	if err != nil {
 		fmt.Println(err)
