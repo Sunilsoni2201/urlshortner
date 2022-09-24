@@ -18,7 +18,7 @@ func Start() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	db := db.NewMemoryDb()
+	db := db.NewMemoryDb("~/memorydb.json")
 	svc := services.NewURLShortner(db)
 	handler := NewURLShortnerHandler(svc)
 
