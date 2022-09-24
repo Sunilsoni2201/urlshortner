@@ -1,0 +1,23 @@
+db
+--
+user id | short url key | actual url
+
+
+apis:
+//create
+POST /shorturl
+
+{
+    url: "www.google.com"
+}
+
+response:
+{
+    shortUrl: "host/shorturlkey"
+}
+
+
+//get
+GET /shorturl/:key
+status 301
+location: "https://www.google.com"
