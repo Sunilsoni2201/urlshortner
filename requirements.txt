@@ -1,3 +1,21 @@
+---------------------------------------------------------
+Action Items:
+
+POC of shorten url (with inmomory db)   - Done
+Refactor code to Hexagonal architecture - Done
+Data persistence (local machine)        - Done
+Writing unit tests                      -
+Data persistence (Redis)                - Can be used as a database, cache, message broker, and queue.
+Purchasing/setup domain                 -
+Containerization (Docker)               -
+Cloud deployment (AWS-EC2)              -
+Kubernetes Support                      -
+
+
+
+---------------------------------------------------------
+
+
 db
 --
 user id | short url key | actual url
@@ -21,3 +39,10 @@ response:
 GET /shorturl/:key
 status 301
 location: "https://www.google.com"
+
+
+
+  
+
+
+
