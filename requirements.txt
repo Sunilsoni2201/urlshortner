@@ -4,14 +4,20 @@ Action Items:
 POC of shorten url (with inmomory db)   - Done
 Refactor code to Hexagonal architecture - Done
 Data persistence (local machine)        - Done
-Writing unit tests                      -
+Writing unit tests                      - In Progress
 Data persistence (Redis)                - Can be used as a database, cache, message broker, and queue.
 Purchasing/setup domain                 -
 Containerization (Docker)               -
 Cloud deployment (AWS-EC2)              -
 Kubernetes Support                      -
 
-
+Benchmarking
+    - CreateShortURL + MemoryDb         - Done (
+        cpu: Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz
+        BenchmarkCreateShortURL-8         584815              2139 ns/op
+        
+        cpu: Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz
+        BenchmarkCreateShortURL-8   	  517830	      2183 ns/op	     643 B/op	      11 allocs/op
 
 ---------------------------------------------------------
 
