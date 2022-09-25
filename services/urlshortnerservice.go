@@ -58,8 +58,12 @@ func (u *urlShortner) CreateShortURL(ourl string) (surl string, err error) {
 			if err != nil {
 				err = fmt.Errorf("failed to set in db, %s : %s", surl, ourl)
 			}
+			// fmt.Println("new key: ", surl, "success on count: ", i)
 			break
+		} else {
+			// fmt.Println("key already present, retry: ", i, " key: ", surl)
 		}
+
 	}
 
 	if i == retryCount {
