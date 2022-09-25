@@ -53,7 +53,7 @@ func (u *urlShortner) CreateShortURL(ourl string) (surl string, err error) {
 	i := 0
 	for ; i < retryCount; i++ {
 		surl = createURLHash(ourl, 6)
-		if _, err1 := u.db.Get(surl); err1 == nil {
+		if _, err1 := u.db.Get(surl); err1 != nil {
 			err = u.db.Set(surl, ourl)
 			if err != nil {
 				err = fmt.Errorf("failed to set in db, %s : %s", surl, ourl)
