@@ -2,7 +2,9 @@ package app
 
 import (
 	"fmt"
+	"net"
 	"net/http"
+	"urlshortner/pkg/utils"
 	"urlshortner/services"
 
 	"github.com/labstack/echo"
@@ -40,12 +42,15 @@ func (u *urlShortnerHandler) shorten(c echo.Context) error {
 	}
 	in := In{}
 
-	c.Bind(&in)
+	_ = c.Bind(&in)
 
 	surl, err := u.svc.CreateShortURL(in.Url)
 	if err != nil {
 		fmt.Println(err)
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
-	return c.String(http.StatusOK, "justurl.com:8080/"+surl)
+
+	serverPort := c.Echo().Listener.Addr().(*net.TCPAddr).Port
+	shortURL := fmt.Sprintf("%v:%v/%s", utils.GetOutboundIP(), serverPort, surl)
+	return c.String(http.StatusOK, shortURL)
 }
