@@ -1,17 +1,21 @@
 package db
 
-import "testing"
+import (
+	"os"
+	"strconv"
+	"testing"
+)
 
-func TestNewMemoryDb(t *testing.T) {
-
-	db := NewMemoryDb()
-	_, err := db.Get("abc123")
+func TestNewFileDb(t *testing.T) {
+	db := NewFileDb("~/filedb.json")
+	_, err := db.Get("123abc")
 	if err == nil {
 		t.Errorf("error must be nil")
 	}
+	os.Remove("~/filedb.json")
 }
 
-func TestMemoryDBSet(t *testing.T) {
+func TestFileDbSet(t *testing.T) {
 
 	testcases := []struct {
 		name string
@@ -42,7 +46,7 @@ func TestMemoryDBSet(t *testing.T) {
 		},
 	}
 
-	db := NewMemoryDb()
+	db := NewFileDb("")
 
 	for _, tc := range testcases {
 
@@ -63,5 +67,15 @@ func TestMemoryDBSet(t *testing.T) {
 				t.Errorf("got:%v, want:%v", got, tc.want)
 			}
 		})
+	}
+}
+
+func BenchmarkFileDbSet(b *testing.B) {
+
+	db := NewFileDb("")
+
+	for i := 0; i < b.N; i++ {
+		//_ = db.Set(strconv.Itoa(i), fmt.Sprintf("www.google%v.com", i))
+		_ = db.Set(strconv.Itoa(i), "www.google"+strconv.Itoa(i)+".com")
 	}
 }
